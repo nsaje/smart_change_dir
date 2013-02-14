@@ -11,9 +11,12 @@ case "$1" in
 		;;
 	*)
 		PATTERN=$(printf "%s*" "$@")
-		FOUND=$(locate *"$PATTERN" | head -n 1)
-		if [ -d "$FOUND" ]; then
-			pushd "$FOUND"
-		fi
+		FOUND=$(locate *"$PATTERN")
+		for line in $FOUND; do
+			if [ -d "$line" ]; then
+				pushd "$line"
+				break;
+			fi
+		done
 		;;
 esac
